@@ -1,17 +1,22 @@
 Word Vectors in Python
 
-Directions
+SETUP
 
-Required package installation:
-pip install gensim
-pip install nltk
+Install packages:
+  > pip install gensim nltk sklearn matplotlib
 
-Required only for plotting:
-pip install matplotlib
-pip install sklearn
+Add files to create word vectors from:
+  Add a file to the directory text/ (~200MB txt files are fine, ~1GB file froze my computer)
 
-How to run:
-1. Add a file to text/ to generate word vectors from (~200MB txt files are fine, 1GB file froze my computer)
-2. Run python wordvecgen.py
-3. Choose gen to generate a model with the txt file
-4. Choose cmp to do arithmetic with the word vectors
+GENERATE WORD VECTOR MODEL (required to do other functions)
+  > python wvgen.py
+  Model will be generated in directory model/
+  
+PLOT WORDS FROM WORD VECTOR MODEL
+  > python wvplot.py
+  
+CUSTOM WORD VECTOR ARITHMETIC
+  > python wvarith.py
+  
+WORD VECTOR LINEAR EQUATIONS
+  > python wvlinear.py
