@@ -10,7 +10,6 @@ Add files to create word vectors from:
 
 GENERATE WORD VECTOR MODEL (required to do other functions)
   > python wvgen.py
-  Model will be generated in directory model/
   
 PLOT WORDS FROM WORD VECTOR MODEL
   > python wvplot.py
@@ -18,5 +17,5 @@ PLOT WORDS FROM WORD VECTOR MODEL
 CUSTOM WORD VECTOR ARITHMETIC
   > python wvarith.py
   
-WORD VECTOR LINEAR EQUATIONS
+FIND NEAR LINEAR EQUATIONS
   > python wvlinear.py
