@@ -8,7 +8,7 @@ Install packages:
 Add files to create word vectors from:
   Add a file to the directory text/ (~200MB txt files are fine, ~1GB file froze my computer)
 
-GENERATE WORD VECTOR MODEL (required to do other functions)
+GENERATE WORD VECTOR MODEL (use this to create a model and do the other functions)
   > python wvgen.py
   
 PLOT WORDS FROM WORD VECTOR MODEL
