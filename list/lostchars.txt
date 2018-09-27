@@ -1,6 +1,0 @@
-Jack,Locke,Kate,Hurley,Sawyer,Sayid,Jin,Sun,Claire,Charlie,Michael,Walt,Boone
-Ben,Juliet,Richard,Ethan,Tom,Mikhail
-Rose,Libby,Eko,Eko,Ana_Lucia,Bernard,Goodwin
-Desmond,Jacob,Daniel,Charlotte,Miles,Penny,Ilana,Pierre,Frank
-Minkowski,Roger,Horace,Radzinski
-Alex,Danielle,Arzt,Vincent,Keamy,Widmore,Nikki,Paulo
