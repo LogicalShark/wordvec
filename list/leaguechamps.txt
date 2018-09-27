@@ -1,0 +1,6 @@
+Aatrox,Camille,Cho'Gath,Darius,Dr._Mundo,Fiora,Gangplank,Garen,Gnar,Illaoi,Irelia,Jax,Jayce,Kayle,Kled,Malphite,Maokai,Nasus,Ornn,Pantheon,Poppy,Renekton,Riven,Rumble,Shen,Singed,Sion,Teemo,Tryndamere,Wukong,Yorick
+Amumu,Elise,Evelynn,Fiddlesticks,Gragas,Graves,Hecarim,Ivern,JarvanIV,Kayn,Kha'Zix,Kindred,Lee_Sin,Master_Yi,Nautilus,Nidalee,Nocture,Nunu_&_Willump,Olaf,Rammus,Rek'Sai,Rengar,Sejuani,Shaco,Shyvana,Skarner,Trundle,Udyr,Vi,Volibear,Warwick,Xin_Zhao,Zac
+Ahri,Akali,Anivia,Annie,Aurelion_Sol,Azir,Brand,Cassiopeia,Diana,Ekko,Fizz,Galio,Heimerdinger,Karthus,Kassadin,Katarina,Kennen,LeBlanc,Lissandra,Lux,Malzahar,Mordekaiser,Orianna,Ryze,Swain,Syndra,Taliyah,Talon,Twisted_Fate,Veigar,Vel'Koz,Viktor,Vladimir,Xerath,Yasuo,Zed,Ziggs,Zoe
+Alistar,Bard,Blitzcrank,Braum,Janna,Karma,Leona,Lulu,Morgana,Nami,Pyke,Rakan,Sona,Soraka,Tahm_Kench,Taric,Thresh,Zilean,Zyra
+Ashe,Caitlyn,Corki,Draven,Ezreal,Jhin,Jinx,Kai'Sa,Kalista,Kog'Maw,Lucian,Miss_Fortune,Quinn,Sivir,Tristana,Twitch,Urgot,Varus,Vayne,Xayah
+Valor,Urf
