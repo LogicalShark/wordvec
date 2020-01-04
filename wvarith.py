@@ -1,21 +1,23 @@
 from gensim.models import Word2Vec
 
+# For doing arithmetic with word vectors
+# e.g. king + woman - man ~= queen, Paris + Italy - France ~= Rome
+
+# Path to model file, output of wvgen.py
+modelf = "model/model.bin"
+# Words to add
+positives = ["Alesia", "Germania"]
+# Words to subtract
+negatives = ["Gallia"]
+# Number of results
+n_results = 3;
 
 def mostSim(model):
-    pos = input("Enter positives separated by ','\n").split(",")
-    if len(pos) == 0:
-        print("Error: empty positive\n")
-        mostSim(model)
-    neg = input("Enter negatives separated by ','\n").split(",")
     try:
-        print([x[0] for x in model.most_similar_cosmul(positive=pos, negative=neg)])
+        print([x[:n_results] for x in model.wv.most_similar_cosmul(positive=positives, negative=negatives)])
     except KeyError:
-        print("Error: word not in vocabulary or incorrect delimiter between words\n")
+        print("Error: word not in vocabulary\n")
+
+if __name__ == "__main__":
+    model = Word2Vec.load(modelf)
     mostSim(model)
-
-
-file = input("Model filename (should end with .bin)\nmodel/")
-model = Word2Vec.load("model/" + file)
-# TODO: KeyedVectors?
-# model = KeyedVectors.load_word2vec_format(argv[1], binary=False)
-mostSim(model)

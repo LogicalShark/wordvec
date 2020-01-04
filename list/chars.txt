@@ -1,0 +1,8 @@
+Odysseus,Telemachus,Penelope,Antinous,Calypso,Polyphemus
+Aeneas,Dido,Turnus,Creusa,Anchises,Sinon,Lavinia,Pallas
+Achilles,Hector,Agamemnon,Patroclus,Ajax,Nestor,Paris,Menelaus,Peleus
+Jason,Pelias,Chiron,Heracles,Hercules,Orpheus,Theseus
+Athena,Zeus,Aphrodite,Poseideon,Ares,Hades,Hephaestus,Artemis,Dionysus,Hermes,Hera
+Minerva,Jupiter,Venus,Neptune,Mars,Pluto,Vulcan,Diana,Bacchus,Mercury,Juno,Jove
+Apollo
+Olympus

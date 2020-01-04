@@ -1,27 +1,22 @@
-Word Vectors in Python
+Word Vectors with Python
 
 SETUP
-  Install packages:
-    > pip install gensim nltk sklearn matplotlib
-
-  Add a file to the directory text/
-  ~200MB txt files are fine, ~1GB file froze my computer
-
-GENERATE WORD VECTOR MODEL (use this to create a model and do the other functions)
-  > python wvgen.py
+Install packages:
+pip install gensim nltk scikit-learn matplotlib
+Add one or more file to the text directory
+~200MB is fine, ~1GB file froze my computer so watch out
+Generate model with wvgen.py
 
 PLOT WORDS FROM WORD VECTOR MODEL
-  > python wvplot.py
+wvplot.py
 
-CUSTOM WORD VECTOR ARITHMETIC
-  > python wvarith.py
+MANUAL WORD VECTOR ARITHMETIC
+wvarith.py
 
-FIND NEAR LINEAR EQUATIONS
-  > python wvlinear.py
+FIND APPROXIMATE LINEAR COMBINATIONS
+wvlinear.py
 
-EXAMPLES
-  The Office (US TV)
-  Danganronpa (Video game franchise)
-
-A good source of data for most shows/games/movies is wikia.com, which often will have database dumps on
-https://[name].wikia.com/wiki/Special:Statistics
+Useful data sources:
+wikia.com will often have database dumps on https://[name].wikia.com/wiki/Special:Statistics
+gutenberg.org has free public domain books in plaintext
+classics.mit.edu has classic texts

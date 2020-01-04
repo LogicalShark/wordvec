@@ -1,6 +1,0 @@
-Yasuhiro,Mukuro,Junko,Celestia,Sakura,Hifumi,Mondo,Chihiro,Kiyotaka,Byakuya,Toko,Leon,Sayaka,Makoto,Kyoko,Aoi
-Peko,Akane,Teruteru,Nagito,Sonia,Fuyuhiko,Kazuichi,Chiaki,Mahiru,Hiyoko,Hajime,Mikan,Ibuki,Nekomaru,Gundham
-Korekiyo,Angie,Kirumi,Kokichi,Tsumugi,Tenko,Kaede,Kaito,Maki,Shuichi,Ryoma,Rantaro,Himiko,Gonta,Miu,K1-B0
-Komaru,Nagisa,Shingetsu,Jataro,Kemuri,Kotoko,Utsugi,Monaca,Masaru,Daimon
-Monokuma,Monomi,Usami,Kurokuma,Shirokuma,Monokid,Monophanie,Monodam,Monotaro,Monosuke
-Keebo,Imposter,Kiyondo,Ishida,Kiyo,Taka,Hina,Hiro,Mechamaru,Minimaru,Genocide,Genocider,Jack,Jill,Syo

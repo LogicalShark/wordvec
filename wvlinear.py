@@ -1,5 +1,12 @@
 from gensim.models import Word2Vec
 
+# Automatically searches for approximate word equations like those in wvarith using combinations of words in a given list
+# For variety, it avoids using too many of the same pairs
+
+# Path to model file, output of wvgen.py
+modelf = "model/model.bin"
+# Path to file with list of words, separated by "," or newlines with no commas
+wordf = "list/champions.txt"
 
 def approxLinear(model, words):
     if len(words) == 1:
@@ -13,19 +20,26 @@ def approxLinear(model, words):
     outputs = []
     for i, first in enumerate(words):
         for j, second in enumerate(words[i:]):
+            pairoutputs = []
             for third in words:
-                for result in model.most_similar_cosmul(positive=[first, second], negative=[third], topn=1):
-                    outputs.append(
-                        (first, second, third, result[0], result[1]))
+                try:
+                    for result in model.wv.most_similar_cosmul(positive=[first, second], negative=[third], topn=1):
+                        pairoutputs.append(
+                            (first, second, third, result[0], result[1]))
+                except:
+                    pass
+            pairoutputs.sort(key=lambda x: x[4])
+            pairoutputs = pairoutputs[:1]
+            outputs += pairoutputs
         outputs.sort(key=lambda x: x[4])
         outputs = outputs[:10]
     for (first, second, third, out, sim) in outputs:
         print(first + "\t+\t" + second + "\t-\t" +
-              third + "\t=\t" + out + "\t\tsimilarity=" + str(sim))
+              third + "\t=\t" + out + "\nsimilarity=" + str(sim))
 
-
-file = input("Model filename (should end with .bin)\nmodel/")
-model = Word2Vec.load("model/" + file)
-words = input(
-    "Filename to use for input\nlist/")
-approxLinear(model, words.split(","))
+if __name__ == '__main__':
+    model = Word2Vec.load(modelf)
+    w = open(wordf, "r")
+    words = ",".join(w.read().split("\n"))
+    w.close()
+    approxLinear(model, words.split(","))
