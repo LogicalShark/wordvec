@@ -4,9 +4,9 @@ from gensim.models import Word2Vec
 # For variety, it avoids using too many of the same pairs
 
 # Path to model file, output of wvgen.py
-modelf = "model/model.bin"
+modelf = "model/officemodel.bin"
 # Path to file with list of words, separated by "," or newlines with no commas
-wordf = "list/champions.txt"
+wordf = "list/officechars.txt"
 
 def approxLinear(model, words):
     if len(words) == 1:

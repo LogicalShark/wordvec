@@ -1,4 +1,0 @@
-Athena,Zeus,Aphrodite,Poseideon,Ares,Hades,Hephaestus,Artemis,Dionysus,Hermes
-Minerva,Jupiter,Venus,Neptune,Mars,Pluto,Vulcan,Diana,Bacchus,Mercury
-Apollo
-Olympus

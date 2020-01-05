@@ -9,8 +9,8 @@ from gensim.models import Word2Vec
 modelf = "model/hkmodel.bin"
 # Path to file with list words to be plotted, words separated by ","
 # and optionally, groups separated by newlines
-wordf = "list/hkchars.txt"
-# PCA axes to plot on, I recommend [0,1] or [1,2] for 2D or [0,1,2] or [1,2,3] for 3D
+wordf = "list/hknames.txt"
+# PCA axes to plot on, the most relevant are [0,1] or [1,2] for 2D or [0,1,2] or [1,2,3] for 3D
 axes = [0, 1, 2]
 
 

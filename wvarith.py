@@ -4,11 +4,11 @@ from gensim.models import Word2Vec
 # e.g. king + woman - man ~= queen, Paris + Italy - France ~= Rome
 
 # Path to model file, output of wvgen.py
-modelf = "model/model.bin"
+modelf = "model/hkmodel.bin"
 # Words to add
-positives = ["Alesia", "Germania"]
+positives = ["City", "Cliffs"]
 # Words to subtract
-negatives = ["Gallia"]
+negatives = ["Greenpath"]
 # Number of results
 n_results = 3;
 
