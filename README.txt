@@ -8,11 +8,12 @@ Add one or more file to the text directory
 
 In any of the below files, look at the comments at the top and customize based on your own files
 wvgen.py generates the model (necessary for all other steps)
-wvplot.py plots words
 
-Compare word vectors with wvarith.py
+wvplot.py plots words provided in a file
 
-Find approximate equations with wvlinear.py
+wvlinear.py finds approximate word vector equations
+
+wvarith.py allows for manual word vector comparisons
 
 Useful data sources:
 wikia.com will often have database dumps on https://[name].wikia.com/wiki/Special:Statistics
