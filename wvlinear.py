@@ -43,4 +43,4 @@ if __name__ == '__main__':
     w = open("list/"+wordf, "r")
     words = ",".join(w.read().split("\n"))
     w.close()
-    approxLinear(model, words.split(","))
+    approxLinear(model, (' '.join(x) for x in words.split(",")))

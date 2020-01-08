@@ -10,12 +10,25 @@ tokenizer = MWETokenizer(separator=" ")
 
 # 1 for unigrams, 2 for bigrams, etc.
 ngram = 1
-# Names of input files, if empty list will use every file in the text directory
+# Names of input files in text directory, if list is empty include every file in the text directory
 files = ["hollowknight_pages_current.xml"]
-# Output file, will be saved in model/
+# Output file, will be saved in model directory
 outfile = "hkmodel.bin"
-# Phrases you want to keep from being separated during tokenization
-custom_phrases = ["City of Tears", "Kingdom's Edge", "Crystal Peak", "Howling Cliffs", "Queen's Gardens", "Fungal Wastes", "Fog Canyon", "White Palace", "Royal Waterways", "The Hive", "The Abyss", "Forgotten Crossroads", "Resting Grounds"]
+# Phrases you want to keep together during tokenization
+# custom_phrases = ["City of Tears", "Kingdom's Edge", "Crystal Peak"]
+
+# To extract multi-word phrases from a file
+def get_file_phrases(fname):
+    phrases = []
+    for line in open("list/"+fname, "r", encoding="utf-8"):
+        for w in line.split(","):
+            if len(word_tokenize(w)) > 1:
+                phrases.append(w)
+    # print("Extracted phrases:",phrases)
+    return phrases
+
+custom_phrases = get_file_phrases("hknames.txt")
+
 
 class LineIterator:
     def __init__(self, filenames):
@@ -23,15 +36,16 @@ class LineIterator:
 
     def __iter__(self):
         for file in self.filenames:
+            # Note: custom phrases will not be condensed if split between lines
             for line in open("text/"+file, mode="r", encoding="utf-8", errors="ignore"):
                 yield tokenizer.tokenize(word_tokenize(line))
 
-def addExceptions():
-    for phrase in custom_phrases:
-        tokenizer.add_mwe(phrase.split())
-
 if __name__ == '__main__':
-    addExceptions()
+    # Add custom phrases as exceptions for tokenizer
+    for phrase in custom_phrases:
+        tokenizer.add_mwe(word_tokenize(phrase))
+
+    # Extract data for Word2Vec
     words = []
     if len(files) == 0:
         directory = os.fsencode("text/")
@@ -40,6 +54,8 @@ if __name__ == '__main__':
     for n in range(ngram-1):
         words = Phrases(words)
         phraser = Phraser(words)
-    # 10M word vocab ~= 1 GB RAM, if vocab limit exceeded least frequent words are pruned
-    model = Word2Vec(words, min_count=5, max_vocab_size=1000000)
+    
+    # Create and save model
+    # 10M word vocab ~= 1 GB RAM, least frequent words are pruned
+    model = Word2Vec(words, min_count=7, max_vocab_size=1000000)
     model.save("model/"+outfile)

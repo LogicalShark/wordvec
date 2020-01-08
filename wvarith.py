@@ -14,9 +14,10 @@ n_results = 3;
 
 def mostSim(model):
     try:
-        print(model.wv.most_similar_cosmul(positive=positives, negative=negatives, topn=n_results))
+        print(model.wv.most_similar_cosmul(positive=[' '.join(
+            x) for x in positives], negative=[' '.join(x) for x in negatives], topn=n_results))
     except KeyError:
-        print("Error: word not in vocabulary\n")
+        print("Error: input word not in vocabulary\n")
 
 if __name__ == "__main__":
     model = Word2Vec.load("model/"+modelf)

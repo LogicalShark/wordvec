@@ -1,0 +1,5 @@
+Kled,Jax,Irelia,Illaoi,Jayce,Kayle,Kennen,Malphite,Maokai,Cho'Gath,Darius,Fiora,Gangplank,Garen,Gnar,Swain,Shen,Singed,Sion,Renekton,Riven,Rumble,Dr. Mundo,Aatrox,Camille,Poppy,Quinn,Ornn,Pantheon,Urgot,Nasus,Mordekaiser,Yorick,Teemo,Tryndamere
+Wukong,Volibear,Olaf,Sejuani,Shaco,Shyvana,Rengar,Nocturne,Nidalee,Master Yi,Gragas,Hecarim,Graves,Evelynn,Rek'Sai,Rammus,Kha'Zix,Kayn,Lee Sin,Kindred,Jarvan IV,Ivern,Zac,Karthus,Elise,Taliyah,Skarner,Vi,Amumu,Xin Zhao,Udyr,Warwick,Trundle,Nunu,Fiddlesticks
+Viktor,Ryze,Akali,Vladimir,Sylas,Yasuo,Lissandra,Lux,Malzahar,Orianna,Qiyana,LeBlanc,Katarina,Kassadin,Heimerdinger,Galio,Fizz,Ekko,Diana,Vel'Koz,Veigar,Zed,Ziggs,Talon,Syndra,Zoe,Cassiopeia,Xerath,Anivia,Ahri,Annie,Aurelion Sol,Azir,Brand
+Vayne,Miss Fortune,Sivir,Kog'Maw,Kalista,Kai'Sa,Jinx,Jhin,Ezreal,Draven,Corki,Lucian,Tristana,Varus,Caitlyn,Xayah,Aphelios,Ashe
+Tahm Kench,Leona,Nautilus,Lulu,Nami,Pyke,Morgana,Neeko,Rakan,Senna,Karma,Janna,Thresh,Zilean,Taric,Soraka,Sona,Braum,Yuumi,Zyra,Alistar,Bard,Blitzcrank
