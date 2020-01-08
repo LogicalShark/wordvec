@@ -2,11 +2,12 @@ from gensim.models import Word2Vec
 
 # Automatically searches for approximate word equations like those in wvarith using combinations of words in a given list
 # For variety, it avoids using too many of the same pairs
+# TODO: try 3 positives, 2 negatives
 
-# Path to model file, output of wvgen.py
-modelf = "model/officemodel.bin"
-# Path to file with list of words, separated by "," or newlines with no commas
-wordf = "list/officechars.txt"
+# Name of model file, output of wvgen.py
+modelf = "drmodel.bin"
+# Name of file with list of words, separated by "," or newlines with no commas
+wordf = "drchars.txt"
 
 def approxLinear(model, words):
     if len(words) == 1:
@@ -39,7 +40,7 @@ def approxLinear(model, words):
 
 if __name__ == '__main__':
     model = Word2Vec.load(modelf)
-    w = open(wordf, "r")
+    w = open("list/"+wordf, "r")
     words = ",".join(w.read().split("\n"))
     w.close()
     approxLinear(model, words.split(","))

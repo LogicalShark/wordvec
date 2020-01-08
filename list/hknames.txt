@@ -1,4 +1,4 @@
 Hornet,Quirrel,Tiso,Zote,Cloth
 Cornifer,Millibelle,Nailsmith,Lemm,Salubra,Sly,Bretta,Seer,Grubfather
 Oro,Mato,Sheo
-Greenpath,Hive,Crossroads,Dirtmouth,Deepnest,City,Tears,Royal,Waterways,Howling,Cliffs,Gardens,Ancient,Basin,Abyss,Edge,Wastes,Canyon,Grounds,Crystal,Peak,Palace
+Greenpath,The Hive,Forgotten Crossroads,Dirtmouth,Deepnest,City of Tears,Royal Waterways,Howling Cliffs,Queen's Gardens,Ancient Basin,The Abyss,Kingdom's Edge,Fungal Wastes,Fog Canyon,Resting Grounds,Crystal Peak,White Palace

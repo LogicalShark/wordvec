@@ -2,16 +2,21 @@ from sklearn.decomposition import PCA
 from matplotlib import pyplot
 from mpl_toolkits.mplot3d import Axes3D
 from gensim.models import Word2Vec
+from sklearn.cluster import KMeans
 
 # Plots words in a given list based on PCA axes
 
-# Path to model file, output of wvgen.py
-modelf = "model/hkmodel.bin"
-# Path to file with list words to be plotted, words separated by ","
-# and optionally, groups separated by newlines
-wordf = "list/hknames.txt"
+# Model filename, output of wvgen.py
+modelf = "hkmodel.bin"
+# Name of file with words to be plotted, separated by ","
+# and groups separated by newlines
+wordf = "hknames.txt"
 # PCA axes to plot on, the most relevant are [0,1] or [1,2] for 2D or [0,1,2] or [1,2,3] for 3D
 axes = [0, 1, 2]
+# Cluster automatically instead of using the newline separation in wordf for groups
+cluster = True
+# Groups if using automatic clustering (k-means++)
+k = 5
 
 
 # To differentiate groups in the graph, you can give the labels a corresponding color or font size
@@ -22,7 +27,7 @@ axes = [0, 1, 2]
 colors = ["tab:red", "tab:green", "tab:blue", "tab:orange", "tab:purple", "tab:pink", "tab:olive", "tab:pink",
           "tab:cyan", "tab:gray", "forestgreen", "teal", "navy", "maroon", "peru", "orangered", "crimson"]
 # Font sizes of words in each group (defaults to 10)
-sizes = [] # [10, 10, 10, 10, 10, 10, 8, 8, 8, 8]
+sizes = [12, 12, 10, 8, 8, 8]
 
 
 def plot2D(result, wordgroups):
@@ -54,18 +59,27 @@ def plot3D(result, wordgroups):
 
 
 if __name__ == '__main__':
-    # TODO: clustering to create groups automatically
-    f = open(wordf, "r", encoding="utf-8")
-    groups = [g.split(",") for g in f.read().split("\n")]
-    f.close()
-    model = Word2Vec.load(modelf)
+    groups = []
+    words = []
+    for line in open("list/" + wordf, "r", encoding="utf-8").read().split("\n"):
+        groups.append(line.split(","))
+        words += line.split(",")
+    model = Word2Vec.load("model/" + modelf)
     vocab = {}
-    for v in model.wv.vocab.keys():
-        if any(v in g for g in groups):
-            vocab[v] = model.wv.vocab[v]
+    for w in words:
+      if w in model.wv.vocab.keys():
+            vocab[w] = model.wv.vocab[w]
     coords = model.wv[vocab]
     pca = PCA(n_components=max(axes)+1)
     result = pca.fit_transform(coords)
+
+    if cluster:
+      estimator = KMeans(init='k-means++', n_clusters=k, n_init=10)
+      estimator.fit_predict(model.wv[vocab])
+      groups = [[] for n in range(k)]
+      for i,w in enumerate(vocab.keys()):
+          group = estimator.labels_[i]
+          groups[group].append(w)
     if len(axes) > 2:
         plot3D(result, groups)
     else:
