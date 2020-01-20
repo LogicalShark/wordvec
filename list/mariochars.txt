@@ -1,0 +1,4 @@
+Mario,Luigi,Peach,Daisy,DK,Bowser,Bowser Jr.,Toad,Toadette,Wario,Waluigi,Yoshi,Birdo
+Bob-omb,Koopa,Goomba,Boo,Bullet Bill,Dry Bones,Hammer Bro,Piranha Plant
+Mushroom Kingdom,Isle Delfino,New Donk City,Comet Observatory,Peach's Castle
+Mario Kart,Super Mario 64,Super Mario Galaxy,Super Mario Bros,Mario Party

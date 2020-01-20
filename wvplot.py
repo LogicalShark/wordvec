@@ -8,10 +8,10 @@ from nltk.tokenize import word_tokenize
 # Plots words in a given list based on PCA axes
 
 # Model filename, output of wvgen.py
-modelf = "leaguemodel.bin"
+modelf = "mariomodel.bin"
 # Name of file with words to be plotted, separated by ","
 # and groups separated by newlines
-wordf = "lolchamps.txt"
+wordf = "mariochars.txt"
 # PCA axes to plot on, the most relevant are [0,1] or [1,2] for 2D or [0,1,2] or [1,2,3] for 3D
 axes = [0, 1, 2]
 # Number of groups to cluster into, use 0 to instead group based on lines in wordf
@@ -23,8 +23,8 @@ clusterK = 3
 
 # Color of words in each group (defaults to black)
 # Dark colors are good for matplotlib's white background, use hex or https://matplotlib.org/gallery/color/named_colors.html
-colors = ["tab:red", "tab:green", "tab:blue", "tab:orange", "tab:purple", "tab:olive", "tab:pink",
-          "tab:cyan", "tab:gray", "forestgreen", "teal", "navy", "maroon", "peru", "orangered", "crimson"]
+colors = ["tab:red", "tab:green", "tab:blue", "tab:orange",
+          "tab:purple", "tab:olive", "tab:pink", "tab:cyan", "tab:gray"]
 # Font sizes of words in each group (defaults to 10)
 sizes = []
 
@@ -57,9 +57,7 @@ def plot3D(result, wordgroups):
                     result[i, axes[2]], word, color=color, fontsize=size)
 
 
-if __name__ == '__main__':
-    model = Word2Vec.load("model/" + modelf)
-
+def get_groups(wordf, model):
     # Extract words to plot from file
     groups = []
     words = []
@@ -70,21 +68,32 @@ if __name__ == '__main__':
         words += l
 
     # Get word vectors from model
-    vocab = {w: model.wv.vocab[w] for w in words}
-    coords = model.wv[vocab]
+    vecs = {w: model.wv.vocab[w] for w in words}
+
+    # Assign groups if using clustering
+    if clusterK > 0:
+        estimator = KMeans(init='k-means++', n_clusters=clusterK, n_init=10)
+        estimator.fit_predict(model.wv[vecs])
+        groups = [[] for n in range(clusterK)]
+        for i, w in enumerate(vecs.keys()):
+            group = estimator.labels_[i]
+            groups[group].append(w)
+
+    return words, groups, vecs
+
+
+if __name__ == '__main__':
+    model = Word2Vec.load("model/" + modelf)
+
+    # Get groups from file or by clustering
+    words, groups, vecs = get_groups(wordf, model)
+
+    coords = model.wv[vecs]
 
     # Create axes to plot on
     pca = PCA(n_components=max(axes)+1)
     result = pca.fit_transform(coords)
-    
-    # Assign groups based on clustering
-    if clusterK > 0:
-        estimator = KMeans(init='k-means++', n_clusters=clusterK, n_init=10)
-        estimator.fit_predict(model.wv[vocab])
-        groups = [[] for n in range(clusterK)]
-        for i, w in enumerate(vocab.keys()):
-            group = estimator.labels_[i]
-            groups[group].append(w)
+
     if len(axes) > 2:
         plot3D(result, groups)
     else:

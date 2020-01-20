@@ -4,44 +4,56 @@ from nltk.tokenize import word_tokenize, MWETokenizer
 from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
 from gensim.models.phrases import Phrases, Phraser
-# glove2word2vec is supposedly faster, I haven't tried it yet
-from gensim.scripts.glove2word2vec import glove2word2vec
-tokenizer = MWETokenizer(separator=" ")
+# glove2word2vec is supposedly faster, have not tried it yet
+# from gensim.scripts.glove2word2vec import glove2word2vec
 
 # 1 for unigrams, 2 for bigrams, etc.
 ngram = 1
 # Names of input files in text directory, if list is empty include every file in the text directory
-files = ["hollowknight_pages_current.xml"]
+files = ["mario_pages_current.xml"]
 # Output file, will be saved in model directory
-outfile = "hkmodel.bin"
-# Phrases you want to keep together during tokenization
-# custom_phrases = ["City of Tears", "Kingdom's Edge", "Crystal Peak"]
+outfile = "mariomodel.bin"
+# Custom multi-token phrases to be kept together, useful if you want to train with unigrams but include some bi/trigrams
+custom_phrases = []  # ["Donkey Kong", "Delfino Plaza"]
+# Name of file in list directory, all multi-token expressions in file will be added as custom phrases
+custom_phrases_filename = "mariochars.txt"
+replacements = {"Donkey Kong": "DK", "Princess Peach": "Peach",
+                "Princess Daisy": "Daisy", "King Koopa": "Bowser"}
 
-# To extract multi-word phrases from a file
-def get_file_phrases(fname):
-    phrases = []
-    for line in open("list/"+fname, "r", encoding="utf-8"):
+# Extracts all multi-token expressions from a file
+
+
+def get_file_phrases(path):
+    exp = []
+    for line in open(path, "r", encoding="utf-8"):
         for w in line.split(","):
             if len(word_tokenize(w)) > 1:
-                phrases.append(w)
-    # print("Extracted phrases:",phrases)
-    return phrases
-
-custom_phrases = get_file_phrases("hknames.txt")
+                exp.append(w)
+    # print("Extracted phrases:",exp)
+    return exp
 
 
 class LineIterator:
     def __init__(self, filenames):
         self.filenames = filenames
 
+    def replace_all(self, line):
+        for word, rep in replacements.items():
+            line = line.replace(word, rep)
+        return line
+
     def __iter__(self):
         for file in self.filenames:
-            # Note: custom phrases will not be condensed if split between lines
+            # TODO: account for multi-word expressions split between lines
             for line in open("text/"+file, mode="r", encoding="utf-8", errors="ignore"):
-                yield tokenizer.tokenize(word_tokenize(line))
+                yield tokenizer.tokenize(word_tokenize(self.replace_all(line)))
+
 
 if __name__ == '__main__':
     # Add custom phrases as exceptions for tokenizer
+    tokenizer = MWETokenizer(separator=" ")
+    if len(custom_phrases_filename) > 0:
+        custom_phrases += get_file_phrases("list/"+custom_phrases_filename)
     for phrase in custom_phrases:
         tokenizer.add_mwe(word_tokenize(phrase))
 
@@ -54,7 +66,7 @@ if __name__ == '__main__':
     for n in range(ngram-1):
         words = Phrases(words)
         phraser = Phraser(words)
-    
+
     # Create and save model
     # 10M word vocab ~= 1 GB RAM, least frequent words are pruned
     model = Word2Vec(words, min_count=7, max_vocab_size=1000000)

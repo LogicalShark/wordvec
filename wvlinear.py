@@ -1,46 +1,70 @@
+from nltk.tokenize import word_tokenize
 from gensim.models import Word2Vec
-
+from sklearn.metrics.pairwise import cosine_similarity
 # Automatically searches for approximate word equations like those in wvarith using combinations of words in a given list
-# For variety, it avoids using too many of the same pairs
-# TODO: try 3 positives, 2 negatives
+# For variety, it avoids using multiple equations with the same pair
 
 # Name of model file, output of wvgen.py
-modelf = "drmodel.bin"
+modelf = "mariomodel.bin"
 # Name of file with list of words, separated by "," or newlines with no commas
-wordf = "drchars.txt"
+wordf = "marionames.txt"
+# Number of equations printed
+num_outputs = 10
+
 
 def approxLinear(model, words):
-    if len(words) == 1:
-        f = open("list/" + words[0], "r", encoding="utf-8")
-        words = []
-        for group in f.read().split("\n"):
-            words += group.split(",")
-            if "" in words:
-                words.remove("")
-        f.close()
     outputs = []
     for i, first in enumerate(words):
-        for j, second in enumerate(words[i:]):
+        firstoutputs = []
+        for j, second in enumerate(words[i+1:]):
             pairoutputs = []
-            for third in words:
-                try:
-                    for result in model.wv.most_similar_cosmul(positive=[first, second], negative=[third], topn=1):
-                        pairoutputs.append(
-                            (first, second, third, result[0], result[1]))
-                except:
-                    pass
-            pairoutputs.sort(key=lambda x: x[4])
-            pairoutputs = pairoutputs[:1]
-            outputs += pairoutputs
-        outputs.sort(key=lambda x: x[4])
-        outputs = outputs[:10]
-    for (first, second, third, out, sim) in outputs:
-        print(first + "\t+\t" + second + "\t-\t" +
-              third + "\t=\t" + out + "\nsimilarity=" + str(sim))
+            for third in words[(i+1)+(j+1):]:
+                result = model.wv.most_similar_cosmul(
+                    positive=[first, second], negative=[third], topn=2)
+                top = result[0]
+                if result[0][0] in [first, second, third]:
+                    top = result[1]
+                pairoutputs.append(
+                    ([first, second, third], top[0], top[1]))
+            result = model.wv.most_similar_cosmul(
+                positive=[first, second], negative=[], topn=2)
+            top = result[0]
+            if result[0][0] in [first, second, third]:
+                top = result[1]
+            cont = False
+            for o in outputs:
+                if o[0][2] == third:
+                    cont = True
+                    # if o[2] <= top[1]:
+                    # outputs.remove(o)
+                    break
+            if cont:
+                break
+            pairoutputs.append(
+                ([first, second, "(None)"], top[0], top[1]))
+            # Pick the top 2 best matches from this first/second pair
+            pairoutputs.sort(key=lambda x: -x[2])
+            pairoutputs = pairoutputs[:2]
+            firstoutputs += pairoutputs
+        firstoutputs.sort(key=lambda x: -x[2])
+        firstoutputs = firstoutputs[:3]
+        outputs += firstoutputs
+        outputs.sort(key=lambda x: -x[2])
+        outputs = outputs[:num_outputs]
+    for o in outputs:
+        print(o[0], o[1], o[2])
+
 
 if __name__ == '__main__':
-    model = Word2Vec.load(modelf)
+    model = Word2Vec.load("model/"+modelf)
+
+    # Get words from file
     w = open("list/"+wordf, "r")
     words = ",".join(w.read().split("\n"))
     w.close()
-    approxLinear(model, (' '.join(x) for x in words.split(",")))
+
+    # Handle multi-word expressions
+    words = [' '.join(word_tokenize(x)) for x in words.split(",")]
+    # Remove words not in model
+    words = [f for f in filter(lambda x: x in model.wv.vocab.keys(), words)]
+    approxLinear(model, words)
