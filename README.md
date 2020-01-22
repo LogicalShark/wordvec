@@ -17,13 +17,13 @@ In all of the below files, look at the parameters at the top and customize based
 ## Useful data sources:
 Database dumps from Fandom wikis (something.wikia.com/wiki/Special:Statistics)
 
-[Public domain books](gutenberg.org)
+[Public domain books](http://gutenberg.org)
 
 [Twitter API](https://developer.twitter.com/en/docs)
 
 [Misc. Corpora](https://en.wikipedia.org/wiki/List_of_text_corpora)
 
-[Classic texts](classics.mit.edu)
+[Classic texts](http://classics.mit.edu)
 
 ## Included Examples:
 `model/` includes models for Super Mario, League of Legends, The Office (TV), Star Wars, Danganronpa, and Hollow Knight
