@@ -7,52 +7,57 @@ from sklearn.metrics.pairwise import cosine_similarity
 # Name of model file, output of wvgen.py
 modelf = "mariomodel.bin"
 # Name of file with list of words, separated by "," or newlines with no commas
-wordf = "marionames.txt"
+wordf = "mariochars.txt"
 # Number of equations printed
-num_outputs = 10
+num_outputs = 15
+
+
+def filterResults(outputs):
+    newoutputs = []
+    # Sort by result similarity
+    outputs.sort(key=lambda x: -x[1])
+    # Track occurrences of each word
+    occs = {w: 0 for w in [o[0][n] for n in range(4) for o in outputs]}
+    # Don't delete more than necessary
+    toDelete = len(outputs) - num_outputs
+    # Filter to prevent too many repeats of the same word
+    for o in outputs:
+        # Increment occurrences
+        for n in range(4):
+            occs[o[0][n]] += 1
+        # Check number of occurrences of each word
+        uniqueResult = all([occs[o[0][n]] <= 4 for n in range(4)])
+        # Don't delete if it's unique enough
+        if uniqueResult or toDelete == 0:
+            newoutputs.append(o)
+        else:
+            toDelete -= 1
+    return newoutputs
 
 
 def approxLinear(model, words):
     outputs = []
+    # Iterate through all equations, don't use the same word twice in the equation
     for i, first in enumerate(words):
-        firstoutputs = []
         for j, second in enumerate(words[i+1:]):
-            pairoutputs = []
             for third in words[(i+1)+(j+1):]:
+                # Find equation results
                 result = model.wv.most_similar_cosmul(
-                    positive=[first, second], negative=[third], topn=2)
-                top = result[0]
-                if result[0][0] in [first, second, third]:
-                    top = result[1]
-                pairoutputs.append(
-                    ([first, second, third], top[0], top[1]))
-            result = model.wv.most_similar_cosmul(
-                positive=[first, second], negative=[], topn=2)
-            top = result[0]
-            if result[0][0] in [first, second, third]:
-                top = result[1]
-            cont = False
-            for o in outputs:
-                if o[0][2] == third:
-                    cont = True
-                    # if o[2] <= top[1]:
-                    # outputs.remove(o)
-                    break
-            if cont:
-                break
-            pairoutputs.append(
-                ([first, second, "(None)"], top[0], top[1]))
-            # Pick the top 2 best matches from this first/second pair
-            pairoutputs.sort(key=lambda x: -x[2])
-            pairoutputs = pairoutputs[:2]
-            firstoutputs += pairoutputs
-        firstoutputs.sort(key=lambda x: -x[2])
-        firstoutputs = firstoutputs[:3]
-        outputs += firstoutputs
-        outputs.sort(key=lambda x: -x[2])
-        outputs = outputs[:num_outputs]
+                    positive=[first, second], negative=[third], topn=3)
+                outputs += ([([first, second, third, result[n][0]],
+                              result[n][1]) for n in range(3)])
+            # Try with no negative
+            # result = model.wv.most_similar_cosmul(positive=[first, second], negative=[], topn=3)
+            # top = result[0]
+            # pairoutputs.append(
+            #     ([first, second, "(None)"], top[0], top[1]))
+
+        # Filter out the lowest outputs
+        outputs = filterResults(outputs)
+    # Delete least similar
+    outputs = outputs[:num_outputs]
     for o in outputs:
-        print(o[0], o[1], o[2])
+        print(o[0][0], "+", o[0][1], "-", o[0][2], "=", o[0][3], o[1])
 
 
 if __name__ == '__main__':

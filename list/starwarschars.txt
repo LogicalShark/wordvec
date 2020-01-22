@@ -1,0 +1,7 @@
+Luke,Leia,Vader,Obi-Wan,Chewbacca,Han,Lando,Yoda
+R2-D2,C-3PO
+Anakin,Windu,Padme,Ahsoka,Jyn,Jar Jar,Palpatine,Dooku,Qui-Gon
+Jabba,Boba Fett
+Kylo Ren,Rey,Finn,Poe,BB-8
+Tatooine,Hoth,Naboo,Alderaan,Dagobah,Scarif,Endor,Death Star,Mandalore,Crait,Mustafar,Bespin
+First Order,Galactic Empire,Resistance,Galactic Republic

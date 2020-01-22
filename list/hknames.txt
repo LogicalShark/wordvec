@@ -1,5 +1,0 @@
-Greenpath,The Hive,Forgotten Crossroads,Dirtmouth,Deepnest,City of Tears,Royal Waterways,Howling Cliffs,Queen's Gardens,Ancient Basin,The Abyss,Kingdom's Edge,Fungal Wastes,Fog Canyon,Resting Grounds,Crystal Peak,White Palace
-The Knight,The Hollow Knight,Quirrel,Tiso,Zote,Cloth,Hornet
-Cornifer,Millibelle,Nailsmith,Lemm,Salubra,Sly,Bretta,Seer,Grubfather
-Oro,Mato,Sheo
-Pale King

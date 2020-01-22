@@ -1,25 +1,28 @@
 import os
 from nltk import word_tokenize
 from nltk.tokenize import word_tokenize, MWETokenizer
+# For genism install Anaconda and a C compiler! WSL may work but I haven't tested on it
 from gensim.models import Word2Vec
 from gensim.models import KeyedVectors
 from gensim.models.phrases import Phrases, Phraser
-# glove2word2vec is supposedly faster, have not tried it yet
+
+# glove2word2vec is supposedly better, also have not tried it yet
 # from gensim.scripts.glove2word2vec import glove2word2vec
 
 # 1 for unigrams, 2 for bigrams, etc.
 ngram = 1
 # Names of input files in text directory, if list is empty include every file in the text directory
-files = ["mario_pages_current.xml"]
+files = ["hollowknight_pages_current.xml"]
 # Output file, will be saved in model directory
-outfile = "mariomodel.bin"
+outfile = "hkmodel.bin"
 # Custom multi-token phrases to be kept together, useful if you want to train with unigrams but include some bi/trigrams
 custom_phrases = []  # ["Donkey Kong", "Delfino Plaza"]
 # Name of file in list directory, all multi-token expressions in file will be added as custom phrases
-custom_phrases_filename = "mariochars.txt"
-replacements = {"Donkey Kong": "DK", "Princess Peach": "Peach",
-                "Princess Daisy": "Daisy", "King Koopa": "Bowser"}
-
+custom_phrases_filename = "hkchars.txt"
+# replacements = {"Donkey Kong": "DK", "Princess Peach": "Peach",
+                # "Princess Daisy": "Daisy", "King Koopa": "Bowser"}
+# replacements = {"Sheev Palpatine": "Palpatine", "Chancellor Palpatine":"Palpatine", "Count Dooku":"Dooku", "Princess Leia": "Leia", "Han Solo": "Han", "Darth Vader":"Vader", "Luke Skywalker": "Luke", "Anakin Skywalker": "Anakin", "Jabba the Hutt": "Jabba", "Ahsoka Tano": "Ahsoka", "Lando Calrissian": "Lando", "Poe Dameron": "Poe", "Jyn Erso": "Jyn", "Mace Windu": "Windu", "Jar Jar Binks": "Jar Jar", "Padmé Amidala":"Padme","Qui-Gon Jinn":"Qui-Gon"}
+replacements = {"Watcher Knights":"Watcher Knight"}
 # Extracts all multi-token expressions from a file
 
 

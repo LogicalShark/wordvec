@@ -8,25 +8,28 @@ from nltk.tokenize import word_tokenize
 # Plots words in a given list based on PCA axes
 
 # Model filename, output of wvgen.py
-modelf = "mariomodel.bin"
+modelf = "hkmodel.bin"
 # Name of file with words to be plotted, separated by ","
 # and groups separated by newlines
-wordf = "mariochars.txt"
+wordf = "hkchars.txt"
 # PCA axes to plot on, the most relevant are [0,1] or [1,2] for 2D or [0,1,2] or [1,2,3] for 3D
-axes = [0, 1, 2]
-# Number of groups to cluster into, use 0 to instead group based on lines in wordf
+axes = [0, 1]
+# Number of groups to cluster into, if left at 0 grouping is based on line separation in wordf
 clusterK = 3
 
 
 # To differentiate groups in the graph, you can give the labels a corresponding color or font size
-# e.g. words in the first group will be red, words in the second group will be turquoise, etc.
+# e.g. words in the first group will be red, words in the second group will be blue, etc.
 
-# Color of words in each group (defaults to black)
+# Color of words in each group, uses default if too many groups
 # Dark colors are good for matplotlib's white background, use hex or https://matplotlib.org/gallery/color/named_colors.html
-colors = ["tab:red", "tab:green", "tab:blue", "tab:orange",
+colors = ["tab:red", "tab:blue", "tab:green", "tab:orange",
           "tab:purple", "tab:olive", "tab:pink", "tab:cyan", "tab:gray"]
-# Font sizes of words in each group (defaults to 10)
+defaultcolor = "black"
+
+# Font sizes of words in each group
 sizes = []
+defaultsize = 16
 
 
 def plot2D(result, wordgroups):
@@ -37,8 +40,8 @@ def plot2D(result, wordgroups):
                 continue
             i = words.index(word)
             coord = (result[i, axes[0]], result[i, axes[1]])
-            color = colors[g] if g < len(colors) else "black"
-            size = sizes[g] if g < len(sizes) else 10
+            color = colors[g] if g < len(colors) else defaultcolor
+            size = sizes[g] if g < len(sizes) else defaultsize
             pyplot.annotate(word, xy=coord, color=color, fontsize=size)
 
 
@@ -51,8 +54,8 @@ def plot3D(result, wordgroups):
             if not word in words:
                 continue
             i = words.index(word)
-            color = colors[g] if g < len(colors) else "black"
-            size = sizes[g] if g < len(sizes) else 10
+            color = colors[g] if g < len(colors) else defaultcolor
+            size = sizes[g] if g < len(sizes) else defaultsize
             ax.text(result[i, axes[0]], result[i, axes[1]],
                     result[i, axes[2]], word, color=color, fontsize=size)
 
