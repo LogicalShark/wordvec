@@ -5,31 +5,40 @@ from nltk.tokenize import word_tokenize
 
 # Name of model file, output of wvgen.py
 modelf = "mariomodel.bin"
-# Words to add
-positives = ["City of Tears", "Howling Cliffs"]
-# Words to subtract
-negatives = ["Greenpath"]
-# Number of results
-n_results = 3
 
-def equationResult(model):
-    try:
-        # Handle multi-word expressions
-        p = [' '.join(word_tokenize(x)) for x in positives]
-        n = [' '.join(word_tokenize(x)) for x in negatives]
-        print(model.wv.most_similar_cosmul(
-            positive=p, negative=n, topn=n_results))
-    except KeyError:
-        print("Error: input word not in vocabulary\n")
+# Words to add and subtract
+# Negative can be empty
+# If both empty, prompts for input from command line
+positives = []  # Mario, Princess
+negatives = []  # Plumber
+# Ex: Mario + Princess - Plumber = Peach
 
-def simWord(model, word):
+# Number of best fitting results to print
+n_out = 5
+
+
+def equation_result(pos, neg, model):
     try:
-        print(model.wv.similar_by_word(word, topn=n_results))
+        # Handle multi-word expressions, assuming MWETokenizer separator=' ' in wvgen.py
+        p = [' '.join(word_tokenize(x)) for x in pos]
+        n = [' '.join(word_tokenize(x)) for x in neg]
+        result = model.wv.most_similar_cosmul(
+            positive=p, negative=n, topn=n_out)
+        print([(x[0], round(x[1], 3)) for x in result])
     except KeyError:
-        print("Error: input word not in vocabulary\n")
+        print("KeyError: input word not in vocabulary\n"+positives+"\n"+negatives)
+
 
 if __name__ == "__main__":
     model = Word2Vec.load("model/"+modelf)
-    if len(positives) == 1 && len(negatives) == 0:
-        simWord(model, positives[0])
-    equationResult(model)
+
+    # Get user input if needed
+    if len(positives) == 0 and len(negatives) == 0:
+        p = input("Enter positives, separated by \",\":").split(",")
+        positives = list(filter(lambda x: len(x) > 0,
+                                [w.strip() for w in p]))
+        n = input("Enter negatives, separated by \",\":").split(",")
+        negatives = list(filter(lambda x: len(x) > 0,
+                                [w.strip() for w in n]))
+
+    equation_result(positives, negatives, model)

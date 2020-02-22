@@ -12,7 +12,7 @@ wordf = "mariochars.txt"
 num_outputs = 15
 
 
-def filterResults(outputs):
+def filter_results(outputs):
     newoutputs = []
     # Sort by result similarity
     outputs.sort(key=lambda x: -x[1])
@@ -35,7 +35,7 @@ def filterResults(outputs):
     return newoutputs
 
 
-def approxLinear(model, words):
+def approx_linear(model, words):
     outputs = []
     # Iterate through all equations, don't use the same word twice in the equation
     for i, first in enumerate(words):
@@ -46,18 +46,13 @@ def approxLinear(model, words):
                     positive=[first, second], negative=[third], topn=3)
                 outputs += ([([first, second, third, result[n][0]],
                               result[n][1]) for n in range(3)])
-            # Try with no negative
-            # result = model.wv.most_similar_cosmul(positive=[first, second], negative=[], topn=3)
-            # top = result[0]
-            # pairoutputs.append(
-            #     ([first, second, "(None)"], top[0], top[1]))
-
-        # Filter out the lowest outputs
-        outputs = filterResults(outputs)
+        # Filter lowest similarity repeats
+        outputs = filter_results(outputs)
     # Delete least similar
     outputs = outputs[:num_outputs]
     for o in outputs:
-        print(o[0][0], "+", o[0][1], "-", o[0][2], "=", o[0][3], o[1])
+        print(o[0][0], "+", o[0][1], "-", o[0][2],
+              "=", o[0][3]+" :", round(o[1], 3))
 
 
 if __name__ == '__main__':
@@ -68,8 +63,10 @@ if __name__ == '__main__':
     words = ",".join(w.read().split("\n"))
     w.close()
 
-    # Handle multi-word expressions
+    # Handle multi-word expressions, assuming MWETokenizer separator=' ' in wvgen.py
     words = [' '.join(word_tokenize(x)) for x in words.split(",")]
-    # Remove words not in model
+
+    # Remove words not in vocabulary
     words = [f for f in filter(lambda x: x in model.wv.vocab.keys(), words)]
-    approxLinear(model, words)
+
+    approx_linear(model, words)

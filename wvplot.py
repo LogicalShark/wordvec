@@ -8,13 +8,15 @@ from nltk.tokenize import word_tokenize
 # Plots words in a given list based on PCA axes
 
 # Model filename, output of wvgen.py
-modelf = "hkmodel.bin"
-# Name of file with words to be plotted, separated by ","
-# and groups separated by newlines
-wordf = "hkchars.txt"
-# PCA axes to plot on, the most relevant are [0,1] or [1,2] for 2D or [0,1,2] or [1,2,3] for 3D
-axes = [0, 1]
-# Number of groups to cluster into, if left at 0 grouping is based on line separation in wordf
+modelf = "mariomodel.bin"
+
+# Name of file with words to be plotted, separated by "," and groups separated by newlines
+wordf = "mariochars.txt"
+
+# PCA axes to plot on, the most relevant are [0,1] or [1,2] for 2D and [0,1,2] or [1,2,3] for 3D
+axes = [0, 1, 2]
+
+# Number of groups to cluster into, if <= 0 groups are instead created for each line in wordf
 clusterK = 3
 
 
@@ -39,6 +41,7 @@ def plot2D(result, wordgroups):
             if not word in words:
                 continue
             i = words.index(word)
+            # Create plot point
             coord = (result[i, axes[0]], result[i, axes[1]])
             color = colors[g] if g < len(colors) else defaultcolor
             size = sizes[g] if g < len(sizes) else defaultsize
@@ -54,6 +57,7 @@ def plot3D(result, wordgroups):
             if not word in words:
                 continue
             i = words.index(word)
+            # Create plot point
             color = colors[g] if g < len(colors) else defaultcolor
             size = sizes[g] if g < len(sizes) else defaultsize
             ax.text(result[i, axes[0]], result[i, axes[1]],
@@ -61,9 +65,10 @@ def plot3D(result, wordgroups):
 
 
 def get_groups(wordf, model):
-    # Extract words to plot from file
-    groups = []
     words = []
+    groups = []
+
+    # Extract words to plot from file
     for line in open("list/" + wordf, "r", encoding="utf-8").read().split("\n"):
         l = [' '.join(word_tokenize(x)) for x in line.split(",")]
         l = filter(lambda x: x in model.wv.vocab.keys(), l)
@@ -97,6 +102,7 @@ if __name__ == '__main__':
     pca = PCA(n_components=max(axes)+1)
     result = pca.fit_transform(coords)
 
+    # Plot vectors on axes
     if len(axes) > 2:
         plot3D(result, groups)
     else:
