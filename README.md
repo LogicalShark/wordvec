@@ -8,7 +8,7 @@ On Windows 10 I strongly recommend using an Anaconda environment and installing 
 
 The python files, look at the parameters at the top and customize based on your own filenames and desired outputs
 
-`wvgen.py` generates the model, a prerequisite for all other steps. Input files go in `text/`
+`wvgen.py` generates the model, a prerequisite for all other steps. Input files go in `text/` and the output is saved in `model/`
 
 `wvplot.py` plots words from a file in `list/`
 
